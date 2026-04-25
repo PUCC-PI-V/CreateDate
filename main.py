@@ -1,5 +1,6 @@
 import customtkinter as ctk
-
+import time
+import atexit
 from CreateData import App as CreateDataApp
 
 
@@ -18,6 +19,9 @@ class App(ctk.CTk):
 
         self._center_window()
         self._build_ui()
+
+        start_time = time.time()
+        atexit.register(self.saveTime, start_time)
 
     def _center_window(self):
         self.update_idletasks()
@@ -186,6 +190,13 @@ class App(ctk.CTk):
         self.cleanFrame()
         new_window = CreateDataApp()
         new_window.mainloop()
+    
+    def saveTime(self, start_time):
+        end_time = time.time()
+        total_time = end_time - start_time
+        with open("tempo_execucao.txt", "a", encoding="utf-8") as f:
+            f.write(f"Tempo de execução: {total_time:.2f} segundos\n")
+            f.write(f"data: {time.ctime()}\n\n")
 
 if __name__ == "__main__":
     app = App()

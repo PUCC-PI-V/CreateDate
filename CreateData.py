@@ -13,8 +13,6 @@ class App(ctk.CTk):
         self.configure(fg_color="#111827")
         self._center_window()
 
-        start_time = time.time()
-        atexit.register(self.saveTime, start_time)
         self._build_ui()
 
     def _center_window(self):
@@ -171,13 +169,6 @@ class App(ctk.CTk):
     
     def getOut(self):
         self.destroy()
-    
-    def saveTime(self, start_time):
-        end_time = time.time()
-        total_time = end_time - start_time
-        with open("tempo_execucao.txt", "a", encoding="utf-8") as f:
-            f.write(f"Tempo de execução: {total_time:.2f} segundos\n")
-            f.write(f"data: {time.ctime()}\n\n")
     
 if __name__ == "__main__":
     app = App()
