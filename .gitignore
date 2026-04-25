@@ -1,1 +1,4 @@
 .env
+venv/
+tempo_execucao.txt
+tatuagens_geradas.txt
