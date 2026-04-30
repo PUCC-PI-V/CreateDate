@@ -1,7 +1,6 @@
 import customtkinter as ctk
 from getData import GetData
-import time
-import atexit
+
 
 
 class App(ctk.CTk):
@@ -12,6 +11,7 @@ class App(ctk.CTk):
         self.minsize(820, 520)
         self.configure(fg_color="#111827")
         self._center_window()
+        self.iconbitmap("icon.ico")
 
         self._build_ui()
 

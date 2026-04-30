@@ -2,8 +2,10 @@ import customtkinter as ctk
 import time
 import atexit
 from CreateData import App as CreateDataApp
+from icon_utils import apply_window_icon, configure_windows_app_id
 
 
+configure_windows_app_id()
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
 
@@ -16,6 +18,7 @@ class App(ctk.CTk):
         self.geometry("760x460")
         self.minsize(760, 460)
         self.configure(fg_color="#111827")
+        apply_window_icon(self)
 
         self._center_window()
         self._build_ui()
@@ -199,5 +202,6 @@ class App(ctk.CTk):
             f.write(f"data: {time.ctime()}\n\n")
 
 if __name__ == "__main__":
+    configure_windows_app_id()
     app = App()
     app.mainloop()

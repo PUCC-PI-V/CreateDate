@@ -12,6 +12,7 @@ client = genai.Client(api_key=API_KEY)
 class GetData(ctk.CTkToplevel):
     def __init__(self, parent):
         super().__init__(parent)
+        
 
         self.dificuldade_var = ctk.StringVar(value="Fácil")
         self.is_fetch_complete = False
