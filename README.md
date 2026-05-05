@@ -30,6 +30,20 @@ Antes de rodar o projeto, voce precisa de:
 
 ## Dependencias
 
+Opcao recomendada (instalar tudo pelo `requirements.txt`):
+
+```powershell
+pip install -r requirements.txt
+```
+
+Se quiser usar exatamente o Python do ambiente virtual no Windows:
+
+```powershell
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Tambem e possivel instalar apenas os pacotes principais manualmente:
+
 Instale estes pacotes no ambiente virtual:
 
 ```powershell
@@ -61,6 +75,12 @@ Para ativar no PowerShell:
 ### 2. Instalar as dependencias
 
 Com o ambiente ativado:
+
+```powershell
+pip install -r requirements.txt
+```
+
+Se quiser, voce tambem pode instalar apenas os pacotes principais:
 
 ```powershell
 pip install customtkinter python-dotenv google-genai
@@ -222,6 +242,12 @@ O programa usa estes arquivos durante a execucao:
 ### `ModuleNotFoundError`
 
 Significa que alguma dependencia nao foi instalada. Rode:
+
+```powershell
+pip install -r requirements.txt
+```
+
+Ou, se preferir somente os pacotes principais:
 
 ```powershell
 pip install customtkinter python-dotenv google-genai
