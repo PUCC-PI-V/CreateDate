@@ -76,6 +76,40 @@ GEMINI_API_KEY="sua_chave_aqui"
 
 Voce tambem pode usar o arquivo `.env.exemple` como referencia.
 
+### 4. Como pegar a chave de API do Gemini (passo a passo)
+
+Se voce ainda nao tem a chave:
+
+1. Acesse o Google AI Studio: [https://aistudio.google.com/](https://aistudio.google.com/);
+2. Faça login com sua conta Google;
+3. Entre na area de API Keys (normalmente em `Get API key`);
+4. Clique em `Create API key`;
+5. Copie a chave gerada.
+
+Depois de copiar, substitua no `.env`:
+
+```env
+GEMINI_API_KEY="COLE_SUA_CHAVE_REAL_AQUI"
+```
+
+Se o projeto ja tiver um `.env` antigo, apenas troque o valor da variavel `GEMINI_API_KEY` pela nova chave.
+
+### 5. Substituindo o `.env` usando o modelo `.env.exemple`
+
+No Windows PowerShell, voce pode copiar o modelo e editar:
+
+```powershell
+Copy-Item .env.exemple .env -Force
+```
+
+Depois abra o arquivo `.env` e atualize:
+
+```env
+GEMINI_API_KEY="SUA_CHAVE_NOVA"
+```
+
+Dica: mantenha o `.env` somente no seu computador e nao compartilhe sua chave.
+
 ## Como executar
 
 Na raiz do projeto:
@@ -101,6 +135,80 @@ Se preferir usar diretamente o Python do ambiente virtual:
 7. Selecione a dificuldade tecnica.
 8. Escreva a justificativa.
 9. Clique em `Salvar resposta`.
+
+## Explicacao do arquivo `dist/getData.py`
+
+O arquivo `dist/getData.py` e a parte central da janela de geracao de descricao. Em resumo:
+
+- carrega variaveis de ambiente com `load_dotenv()` e le `GEMINI_API_KEY`;
+- cria o cliente Gemini com `genai.Client(api_key=API_KEY)`;
+- monta a janela `GetData` (interface de resultado, valor, dificuldade e justificativa);
+- inicia uma thread (`threading.Thread`) para buscar texto sem travar a interface;
+- gera 20 descricoes no metodo `fetch_data()` usando o modelo `gemini-flash-latest`;
+- salva as descricoes em `data.txt` para reuso;
+- retira uma entrada por vez com `pop_first_entry()` e mostra no campo de resultado;
+- persiste a resposta final em `tatuagens_geradas.txt` quando voce clica em `Salvar resposta`.
+
+Se a API estiver indisponivel ou a chave estiver incorreta, esse arquivo mostra mensagens como `Erro ao carregar: ...` no status da tela.
+
+## Gerar executavel com PyInstaller (mais importante)
+
+### Comando solicitado
+
+Use exatamente este comando na raiz do projeto:
+
+```powershell
+pyinstaller --onefile --noconsole --name "ViboraInk" --icon ".dist\icon.ico" main.py
+```
+
+### Passo a passo completo (Windows + PowerShell)
+
+1. Entre na pasta do projeto:
+
+```powershell
+cd C:\CreateDate
+```
+
+2. Ative o ambiente virtual (se estiver usando `venv`):
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+3. Instale o PyInstaller:
+
+```powershell
+pip install pyinstaller
+```
+
+4. Execute o build:
+
+```powershell
+pyinstaller --onefile --noconsole --name "ViboraInk" --icon ".dist\icon.ico" main.py
+```
+
+5. Ao finalizar, o executavel sera criado em:
+
+`dist\ViboraInk.exe`
+
+### Como rodar o executavel
+
+Voce pode iniciar de duas formas:
+
+- pelo Explorer: clique duas vezes em `dist\ViboraInk.exe`;
+- pelo PowerShell:
+
+```powershell
+.\dist\ViboraInk.exe
+```
+
+### Observacoes importantes sobre esse build
+
+- `--onefile`: gera um unico `.exe`;
+- `--noconsole`: abre sem janela de terminal;
+- `--name "ViboraInk"`: define o nome final do executavel;
+- `--icon ".dist\icon.ico"`: define o icone do app (confira se o caminho do icone existe exatamente assim no projeto);
+- se o antivirus bloquear na primeira execucao, adicione excecao para a pasta do projeto e teste novamente.
 
 ## Arquivos gerados
 
