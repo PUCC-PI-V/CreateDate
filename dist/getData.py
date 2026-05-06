@@ -265,7 +265,17 @@ class GetData(ctk.CTkToplevel):
         self.after(0, lambda: self.update_ui(response))
 
 
+    def get_context(self):
+        if os.path.exists("tatuagens_geradas.txt") == False:
+            return ""
+        
+        with open("tatuagens_geradas.txt", "r", encoding="utf-8") as f:
+            return f.list(f.readlines()[:100]) 
+
     def fetch_data(self):
+        
+        context = self.get_context()
+
         try:
             response = client.models.generate_content(
                 model="gemini-flash-latest",
@@ -276,7 +286,8 @@ class GetData(ctk.CTkToplevel):
                 "No topo antes da descrição adicione um titulo que resuma a tatuagem e uma ? logo apos o titulo, seguindo o exemplo: Rosa realista?"+
                 "do titulo para a descrição não adicione espaços vazios mas separe o titulo da descrição, e quando for colocar a descrição adicione no inicio: Descricao:"+
                 " Tente ao maximo possivel se parecer com um humano descrevendo uma tatuagem que deseja realizar"+
-                "e evite de enumerar os 20 dados, mande somente as 20 descrições e isso é muito imporntante: Do titulo para a descrição adicione uma quebra de linha e coloque um espaço de uma tatuagem para a outra"
+                "e evite de enumerar os 20 dados, mande somente as 20 descrições e isso é muito imporntante: Do titulo para a descrição adicione uma quebra de linha e coloque um espaço de uma tatuagem para a outra"+
+                "a seguir aqui esta exemplos ja existentes, então evite de repitir: "+context
             )
     
             texto = response.text
